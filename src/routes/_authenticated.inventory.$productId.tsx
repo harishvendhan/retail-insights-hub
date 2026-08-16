@@ -30,7 +30,7 @@ function ProductDetailPage() {
 
   return (
     <>
-      <PageHeader title={product.name} subtitle={product.nameTa} actions={<StatusBadge status={product.stockStatus} />} />
+      <PageHeader title={product.name} subtitle={product.nameTa ?? ""} actions={<StatusBadge status={product.stockStatus} />} />
       <SectionCard title={t("inventory.title")}>
         <dl className="grid gap-4 sm:grid-cols-3">
           <div>
