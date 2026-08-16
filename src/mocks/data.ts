@@ -117,15 +117,15 @@ export const mockProducts: Product[] = PRODUCT_NAMES.map(([name, nameTa], i) => 
   const reorder = 10 + (i % 5) * 6;
   const stock = i % 11 === 3 ? 0 : Math.max(0, ((i * 37) % 140) - (i % 7) * 4);
   const unitCost = 25 + ((i * 17) % 480);
-  const supplier = mockSuppliers[i % mockSuppliers.length];
+  const supplier = mockSuppliers[i % mockSuppliers.length]!;
   const expiryOffset = 4 + (i % 9) * 21;
   return {
     id: `prd-${i + 1}`,
     sku: `SKU-${(1000 + i).toString()}`,
     name,
     nameTa,
-    category: CATEGORIES[i % CATEGORIES.length],
-    brand: BRANDS[i % BRANDS.length],
+    category: CATEGORIES[i % CATEGORIES.length]!,
+    brand: BRANDS[i % BRANDS.length]!,
     supplierId: supplier.id,
     supplierName: supplier.name,
     unit: "pcs",
