@@ -13,8 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as AuthenticatedAiChatRouteImport } from './routes/_authenticated.ai-chat'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
+import { Route as AuthenticatedImportRouteImport } from './routes/_authenticated.import'
 import { Route as AuthenticatedInventoryRouteImport } from './routes/_authenticated.inventory'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated.reports'
+import { Route as AuthenticatedSalesRouteImport } from './routes/_authenticated.sales'
+import { Route as AuthenticatedSuppliersRouteImport } from './routes/_authenticated.suppliers'
+import { Route as AuthenticatedVoiceRouteImport } from './routes/_authenticated.voice'
+import { Route as AuthenticatedInventoryProductIdRouteImport } from './routes/_authenticated.inventory.$productId'
+import { Route as AuthenticatedSettingsProfileRouteImport } from './routes/_authenticated.settings.profile'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,9 +43,19 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAiChatRoute = AuthenticatedAiChatRouteImport.update({
+  id: '/ai-chat',
+  path: '/ai-chat',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedImportRoute = AuthenticatedImportRouteImport.update({
+  id: '/import',
+  path: '/import',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedInventoryRoute = AuthenticatedInventoryRouteImport.update({
@@ -45,20 +63,68 @@ const AuthenticatedInventoryRoute = AuthenticatedInventoryRouteImport.update({
   path: '/inventory',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSalesRoute = AuthenticatedSalesRouteImport.update({
+  id: '/sales',
+  path: '/sales',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSuppliersRoute = AuthenticatedSuppliersRouteImport.update({
+  id: '/suppliers',
+  path: '/suppliers',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedVoiceRoute = AuthenticatedVoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedInventoryProductIdRoute =
+  AuthenticatedInventoryProductIdRouteImport.update({
+    id: '/$productId',
+    path: '/$productId',
+    getParentRoute: () => AuthenticatedInventoryRoute,
+  } as any)
+const AuthenticatedSettingsProfileRoute =
+  AuthenticatedSettingsProfileRouteImport.update({
+    id: '/settings/profile',
+    path: '/settings/profile',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/ai-chat': typeof AuthenticatedAiChatRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/inventory': typeof AuthenticatedInventoryRoute
+  '/import': typeof AuthenticatedImportRoute
+  '/inventory': typeof AuthenticatedInventoryRouteWithChildren
+  '/reports': typeof AuthenticatedReportsRoute
+  '/sales': typeof AuthenticatedSalesRoute
+  '/suppliers': typeof AuthenticatedSuppliersRoute
+  '/voice': typeof AuthenticatedVoiceRoute
+  '/inventory/$productId': typeof AuthenticatedInventoryProductIdRoute
+  '/settings/profile': typeof AuthenticatedSettingsProfileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/ai-chat': typeof AuthenticatedAiChatRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/inventory': typeof AuthenticatedInventoryRoute
+  '/import': typeof AuthenticatedImportRoute
+  '/inventory': typeof AuthenticatedInventoryRouteWithChildren
+  '/reports': typeof AuthenticatedReportsRoute
+  '/sales': typeof AuthenticatedSalesRoute
+  '/suppliers': typeof AuthenticatedSuppliersRoute
+  '/voice': typeof AuthenticatedVoiceRoute
+  '/inventory/$productId': typeof AuthenticatedInventoryProductIdRoute
+  '/settings/profile': typeof AuthenticatedSettingsProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -66,22 +132,64 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_authenticated/ai-chat': typeof AuthenticatedAiChatRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/inventory': typeof AuthenticatedInventoryRoute
+  '/_authenticated/import': typeof AuthenticatedImportRoute
+  '/_authenticated/inventory': typeof AuthenticatedInventoryRouteWithChildren
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/sales': typeof AuthenticatedSalesRoute
+  '/_authenticated/suppliers': typeof AuthenticatedSuppliersRoute
+  '/_authenticated/voice': typeof AuthenticatedVoiceRoute
+  '/_authenticated/inventory/$productId': typeof AuthenticatedInventoryProductIdRoute
+  '/_authenticated/settings/profile': typeof AuthenticatedSettingsProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/dashboard' | '/inventory'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/ai-chat'
+    | '/dashboard'
+    | '/import'
+    | '/inventory'
+    | '/reports'
+    | '/sales'
+    | '/suppliers'
+    | '/voice'
+    | '/inventory/$productId'
+    | '/settings/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/dashboard' | '/inventory'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/ai-chat'
+    | '/dashboard'
+    | '/import'
+    | '/inventory'
+    | '/reports'
+    | '/sales'
+    | '/suppliers'
+    | '/voice'
+    | '/inventory/$productId'
+    | '/settings/profile'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/login'
     | '/signup'
+    | '/_authenticated/ai-chat'
     | '/_authenticated/dashboard'
+    | '/_authenticated/import'
     | '/_authenticated/inventory'
+    | '/_authenticated/reports'
+    | '/_authenticated/sales'
+    | '/_authenticated/suppliers'
+    | '/_authenticated/voice'
+    | '/_authenticated/inventory/$productId'
+    | '/_authenticated/settings/profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -121,11 +229,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/ai-chat': {
+      id: '/_authenticated/ai-chat'
+      path: '/ai-chat'
+      fullPath: '/ai-chat'
+      preLoaderRoute: typeof AuthenticatedAiChatRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/import': {
+      id: '/_authenticated/import'
+      path: '/import'
+      fullPath: '/import'
+      preLoaderRoute: typeof AuthenticatedImportRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/inventory': {
@@ -135,17 +257,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInventoryRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales': {
+      id: '/_authenticated/sales'
+      path: '/sales'
+      fullPath: '/sales'
+      preLoaderRoute: typeof AuthenticatedSalesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/suppliers': {
+      id: '/_authenticated/suppliers'
+      path: '/suppliers'
+      fullPath: '/suppliers'
+      preLoaderRoute: typeof AuthenticatedSuppliersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/voice': {
+      id: '/_authenticated/voice'
+      path: '/voice'
+      fullPath: '/voice'
+      preLoaderRoute: typeof AuthenticatedVoiceRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/inventory/$productId': {
+      id: '/_authenticated/inventory/$productId'
+      path: '/$productId'
+      fullPath: '/inventory/$productId'
+      preLoaderRoute: typeof AuthenticatedInventoryProductIdRouteImport
+      parentRoute: typeof AuthenticatedInventoryRoute
+    }
+    '/_authenticated/settings/profile': {
+      id: '/_authenticated/settings/profile'
+      path: '/settings/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof AuthenticatedSettingsProfileRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedInventoryRouteChildren {
+  AuthenticatedInventoryProductIdRoute: typeof AuthenticatedInventoryProductIdRoute
+}
+
+const AuthenticatedInventoryRouteChildren: AuthenticatedInventoryRouteChildren =
+  {
+    AuthenticatedInventoryProductIdRoute: AuthenticatedInventoryProductIdRoute,
+  }
+
+const AuthenticatedInventoryRouteWithChildren =
+  AuthenticatedInventoryRoute._addFileChildren(
+    AuthenticatedInventoryRouteChildren,
+  )
+
 interface AuthenticatedRouteChildren {
+  AuthenticatedAiChatRoute: typeof AuthenticatedAiChatRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedInventoryRoute: typeof AuthenticatedInventoryRoute
+  AuthenticatedImportRoute: typeof AuthenticatedImportRoute
+  AuthenticatedInventoryRoute: typeof AuthenticatedInventoryRouteWithChildren
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedSalesRoute: typeof AuthenticatedSalesRoute
+  AuthenticatedSuppliersRoute: typeof AuthenticatedSuppliersRoute
+  AuthenticatedVoiceRoute: typeof AuthenticatedVoiceRoute
+  AuthenticatedSettingsProfileRoute: typeof AuthenticatedSettingsProfileRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAiChatRoute: AuthenticatedAiChatRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedInventoryRoute: AuthenticatedInventoryRoute,
+  AuthenticatedImportRoute: AuthenticatedImportRoute,
+  AuthenticatedInventoryRoute: AuthenticatedInventoryRouteWithChildren,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedSalesRoute: AuthenticatedSalesRoute,
+  AuthenticatedSuppliersRoute: AuthenticatedSuppliersRoute,
+  AuthenticatedVoiceRoute: AuthenticatedVoiceRoute,
+  AuthenticatedSettingsProfileRoute: AuthenticatedSettingsProfileRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
