@@ -18,7 +18,7 @@ const FILTER_MAP: Record<string, StockStatus> = {
 
 export const Route = createFileRoute("/_authenticated/inventory")({
   validateSearch: (search: Record<string, unknown>) => ({
-    filter: typeof search['filter'] === "string" ? search['filter'] : undefined,
+    filter: typeof search['filter'] === "string" ? search['filter'] : "all",
   }),
   head: () => ({
     meta: [
@@ -43,7 +43,7 @@ function InventoryPage() {
   const [sortBy, setSortBy] = useState("name");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
-  const stockStatus = (filter && FILTER_MAP[filter]) ?? "all";
+  const stockStatus: StockStatus | "all" = FILTER_MAP[filter] ?? "all";
   const { data: options } = useFilterOptions();
   const query = { search, category, brand, supplierId, stockStatus, sortBy, sortDir, page, pageSize: 10 };
   const { data, isLoading, error, refetch } = useProducts(query);
@@ -100,11 +100,11 @@ function InventoryPage() {
         ))}
         <select
           aria-label={t("inventory.stockStatus")}
-          value={filter ?? "all"}
+          value={filter}
           onChange={(e) => {
             const v = e.target.value;
             setPage(1);
-            void navigate({ to: "/inventory", search: v === "all" ? {} : { filter: v } });
+            void navigate({ to: "/inventory", search: { filter: v } });
           }}
           className="h-9 rounded-md border bg-card px-3 text-sm"
         >
@@ -125,13 +125,13 @@ function InventoryPage() {
         onRetry={() => void refetch()}
         emptyTitle={t("inventory.empty")}
         emptyDescription={t("inventory.emptyCta")}
-        onRowClick={(p) => void navigate({ to: "/inventory/$productId", params: { productId: p.id } })}
+        onRowClick={(p) => void navigate({ to: "/inventory/$productId", params: { productId: p.id }, search: { filter } })}
         sortBy={sortBy}
         sortDir={sortDir}
         onSortChange={(key, dir) => { setSortBy(key); setSortDir(dir); }}
-        page={data?.page}
-        totalPages={data?.totalPages}
-        total={data?.total}
+        page={data?.page ?? 1}
+        totalPages={data?.totalPages ?? 1}
+        total={data?.total ?? 0}
         onPageChange={setPage}
         context={`${t("common.asOf")} ${new Date().toLocaleString("en-IN")}`}
       />

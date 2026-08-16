@@ -26,35 +26,36 @@ function ProductDetailPage() {
   if (isLoading) return <LoadingSkeleton variant="cards" rows={4} />;
   if (error) return <ErrorState error={error} onRetry={() => void refetch()} />;
   if (!data) return null;
+  const product = data.product;
 
   return (
     <>
-      <PageHeader title={data.name} subtitle={data.nameTa} actions={<StatusBadge status={data.stockStatus} />} />
+      <PageHeader title={product.name} subtitle={product.nameTa} actions={<StatusBadge status={product.stockStatus} />} />
       <SectionCard title={t("inventory.title")}>
         <dl className="grid gap-4 sm:grid-cols-3">
           <div>
             <dt className="text-xs text-muted-foreground">{t("inventory.stock")}</dt>
-            <dd className="tabular text-sm font-medium">{data.currentStock} {data.unit}</dd>
+            <dd className="tabular text-sm font-medium">{product.currentStock} {product.unit}</dd>
           </div>
           <div>
             <dt className="text-xs text-muted-foreground">{t("inventory.stockValue")}</dt>
-            <dd className="tabular text-sm font-medium">{formatCurrency(data.stockValue)}</dd>
+            <dd className="tabular text-sm font-medium">{formatCurrency(product.stockValue)}</dd>
           </div>
           <div>
             <dt className="text-xs text-muted-foreground">{t("inventory.expiry")}</dt>
-            <dd className="tabular text-sm font-medium">{formatDate(data.expiryDate)}</dd>
+            <dd className="tabular text-sm font-medium">{formatDate(product.expiryDate)}</dd>
           </div>
           <div>
             <dt className="text-xs text-muted-foreground">{t("inventory.sku")}</dt>
-            <dd className="font-mono text-sm">{data.sku}</dd>
+            <dd className="font-mono text-sm">{product.sku}</dd>
           </div>
           <div>
             <dt className="text-xs text-muted-foreground">{t("inventory.category")}</dt>
-            <dd className="text-sm">{data.category}</dd>
+            <dd className="text-sm">{product.category}</dd>
           </div>
           <div>
             <dt className="text-xs text-muted-foreground">{t("inventory.brand")}</dt>
-            <dd className="text-sm">{data.brand}</dd>
+            <dd className="text-sm">{product.brand}</dd>
           </div>
         </dl>
       </SectionCard>
