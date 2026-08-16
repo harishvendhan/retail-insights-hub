@@ -145,7 +145,7 @@ export interface MovementEntry {
   date: string;
   type: "purchase" | "sale" | "adjustment" | "return";
   quantity: number;
-  note?: string;
+  note?: string | undefined;
 }
 
 export interface PurchaseEntry {
